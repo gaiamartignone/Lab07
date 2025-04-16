@@ -1,7 +1,7 @@
 import flet as ft
 
 from UI.view import View
-from model.model import Model
+from model.modello import Model
 
 
 class Controller:
@@ -14,6 +14,16 @@ class Controller:
         self._mese = 0
 
     def handle_umidita_media(self, e):
+        self._view.lst_result.controls.clear()
+        mese = self._view.dd_mese.value
+        if mese is None:
+            self._view.create_alert("Attenzione, selezionare un mese!")
+            self._view.update_page()
+            return
+        tomedia,gemedia,mimedia = self._model.getumidita(mese)
+        self._view.lst_result.controls.append(ft.Text(f"L'umidità media nel "
+        f"mese selezionato è:\n Genova:{gemedia}\n Milano:{mimedia}\n Torino:{tomedia}"))
+        self._view.update_page()
         pass
 
 
