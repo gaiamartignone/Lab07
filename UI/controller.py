@@ -29,7 +29,17 @@ class Controller:
 
 
     def handle_sequenza(self, e):
-        pass
+        self._view.lst_result.controls.clear()
+        mese = self._view.dd_mese.value
+        if mese is None:
+            self._view.create_alert("Attenzione, selezionare un mese!")
+            self._view.update_page()
+            return
+        sequenza,costo = self._model.getsequenza(mese)
+        self._view.lst_result.controls.append(ft.Text(f"La sequenza ottima ha costo: {costo} ed è:"))
+        for meta in sequenza:
+            self._view.lst_result.controls.append(ft.Text(meta.__str__()))
+        self._view.update_page()
 
     def read_mese(self, e):
         self._mese = int(e.control.value)
